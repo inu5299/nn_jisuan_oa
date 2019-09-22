@@ -4,5 +4,13 @@
 }
 .flex{
 	display: flex;
-	justify-content: center;
+	/* justify-content: ; */
+	/* justify-content: center; */
+}
+.title{
+	text-align: center;
+	font-size: 14pt;
+}
+.summary{
+	/* display: flex; */
 }

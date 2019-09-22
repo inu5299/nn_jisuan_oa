@@ -6,3 +6,30 @@
 	display: flex;
 	justify-content: center;
 }
+
+.tag{
+	margin-right: 5px;
+}
+	
+.menu{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+	padding: 10px 0; 
+	font-display: 11pt;
+}
+.leaf{
+	
+		position: relative;
+}
+.menu_num{
+	position: absolute;
+	top: -2px;
+	right: -10px;
+}
+
+.pre{color: $oa-color-pre;}
+.ing{color: $oa-color-ing;}
+.complete{color: $oa-color-complete;}
+.close{color: $oa-color-close;}
