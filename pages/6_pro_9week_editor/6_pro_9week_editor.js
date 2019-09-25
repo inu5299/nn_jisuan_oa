@@ -16,6 +16,10 @@ export default {
 	onLoad() {
 	},
 	methods: {
-
+		toComplete(){
+			uni.navigateTo({
+				url:"/pages/6_pro_9week_task/6_pro_9week_task"
+			})
+		},
 	},
 }

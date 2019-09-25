@@ -38,13 +38,13 @@ export default {
 			var index = e.index
 			switch (index){
 				case 0:
-					uni.navigateTo({url:'/pages/2_work_2editor/2_work_2editor'})
+					uni.navigateTo({url:'/pages/6_pro_9week/6_pro_9week'})
 					break;
 				case 1:
-					uni.navigateTo({url:'/pages/2_work_2editor/2_work_2editor'})
+					uni.navigateTo({url:'/pages/6_pro_5task/6_pro_5task'})
 					break;
 				case 2:
-					uni.navigateTo({url:'/pages/2_work_2editor/2_work_2editor'})
+					uni.navigateTo({url:'/pages/6_pro_2team/6_pro_2team'})
 					break;
 				case 3:
 					uni.navigateTo({url:'/pages/7_more_1pro/7_more_1pro'})

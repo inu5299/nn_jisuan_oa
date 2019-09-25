@@ -1,6 +1,13 @@
 <script>
 	export default {
 		onLaunch: function() {
+			uni.showToast({
+				title:"加载中",
+				icon:"loading",
+				duration:3000,
+			})
+			
+			
 			console.log('App Launch');
 			// #ifdef APP-PLUS
 			// 锁定屏幕方向

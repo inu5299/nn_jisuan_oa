@@ -6,13 +6,3 @@
 	display: flex;
 	justify-content: center;
 }
-.search{
-	padding: 10px 15px;
-	background-color: #fff;
-	/* border-bottom: 1rpx #999999 solid; */
-}
-
-.input{
-	background-color: #efefef;
-	padding: 5px;
-}

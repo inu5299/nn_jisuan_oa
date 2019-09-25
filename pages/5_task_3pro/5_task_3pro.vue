@@ -3,8 +3,8 @@
 
 
 			
-		<view class="component search">
-			<input class="input" type="text" value="" focus="true" />
+		<view class="component " style="padding: 10px 15px;background-color: #fff;">
+			<input type="text" value="" focus="true" style="background-color: #efefef;padding: 5px;" />
 		</view>
 		<view class="component ">
 			<xx-mark text="项目名称"></xx-mark>
