@@ -44,6 +44,10 @@ export default {
 	},
 
 	onLoad() {
+		this.$db.checkToken().then(res=>{
+			console.log(res)
+		})
+		
 	},
 	methods: {
 		onClickItem(index) {

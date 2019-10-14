@@ -43,7 +43,7 @@
 
 <style lang="scss">
 	.content{
-		padding:0 15px ;
+		// padding:0 15px ;
 		// background-color: #fff;
 		// display: flex;
 		// justify-content: space-around;

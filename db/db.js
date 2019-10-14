@@ -5,8 +5,10 @@ class db{
 	KEY_USER_INFO = "user_info"
 	KEY_UUID = "uuid"
 	
-	HOST = "https://www.51zfgx.com/dev/"
-	URL = this.HOST + "photo/"
+	// HOST = "https://www.51zfgx.com/dev/"
+	// URL = this.HOST + "photo/"
+	URL = "http://221.7.253.6:9019/Api/"
+	
 	// API_LOGIN =  `${this.URL}system/set/user_info/`
 	
 	API_LOGIN = "http://nnjc.lwdweb.top/User/Login"
@@ -40,11 +42,12 @@ class db{
     }
 	
     // 获取店铺列表
-    baseURL(url,data) {
+    baseURL(url,method,data) {		
         return new Promise((resolve, reject) => {
             this.base({
-                url: url,
-                data:data || {}
+                url: this.URL + url,
+				method:method,
+                data:data || {},
             })
             .then(res => resolve(res))
             .catch(res => {
@@ -63,10 +66,30 @@ class db{
 			.catch(res => reject(res))
         })
     }
-	
-	
+		
 	getName(){
 		return "hellow"
+	}
+		
+	/*
+	 * @method 2 验证token
+	 */
+	checkToken(token){
+		// return new Promise((resolve, reject) => {
+		// 	resolve({
+		// 		"code":0,
+		// 		"msg":'success',
+		// 		"data":'21dfssdgfrgre'
+		// 	})
+		// })
+		
+		return this.baseURL("Task/TaskHandler.ashx?action=getToken","POST", { 
+			grant_type:'password',
+			username:"admin",
+			password:"123",
+		})
+		
+		
 	}
 	
 	
