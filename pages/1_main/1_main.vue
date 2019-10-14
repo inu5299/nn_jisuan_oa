@@ -4,7 +4,7 @@
 		<view class="oa-node ">			
 			<uni-segmented-control 
 				:current="current" 
-				:values="['项目','员工']" 
+				:values="tabList" 
 				style-type="text" 
 				@clickItem="onClickItem"
 			/>
@@ -21,16 +21,32 @@
 			</view>
 					
 			<!-- 饼状图 -->
-			<view class="oa-node oa-flex_center oa-white">
-				<chart-arc></chart-arc>
-				<chart-arc></chart-arc>
+			<view class="oa-node oa-flex_between oa-white">
+				<chart-arc mode="work" 
+					:canvasID="'work'"
+					:complete="total.WorkdoneTotal" 
+					:all="total.WorkTotal"
+					:rate="total.WorkRate"
+				></chart-arc>
+				
+				<chart-arc mode="task"	
+					:canvasID="'task'"
+					:complete="total.TaskDoneTotal" 
+					:all="total.TaskTotal"
+					:rate="total.TaskRate"
+				></chart-arc>
 			</view>
 			
 			<view class="oa-node oa-pd15 ">
 				<xx-mark text="任务统计"></xx-mark>
 			</view>
 			<view class="oa-node oa-white oa-space_10">
-				<statistis></statistis>
+				<statistis 
+					:pre="total.TaskNotStartTotal"
+					:ing="total.TaskDoingTotal"
+					:complete="total.TaskDoneTotal"
+					:close="total.TaskClosedTotal"
+				></statistis>
 			</view>
 			<view class="oa-node oa-white oa-space_10"  v-for="(item,key) in proList"  @click="clickPro(key)">
 				<task-process :node="item"></task-process>
@@ -45,7 +61,9 @@
 			<view class="oa-node"></view>
 					<!-- 饼状图 -->
 			<view class="oa-node oa-flex_center oa-white oa-space_10">
-				<chart-arc></chart-arc>
+				<chart-arc
+					canvasID="taskMember"
+				></chart-arc>
 			</view>
 			<view class="oa-node oa-white oa-space_10"   >
 				<!-- <task-process :node="item"></task-process> -->

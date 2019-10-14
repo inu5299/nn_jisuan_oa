@@ -3,12 +3,13 @@
 	<!-- 圆弧进度图 -->
 	<view class="qiun-charts3">
 		
-		<canvas canvas-id="canvasArcbar1" id="canvasArcbar1" class="charts3"></canvas>
+		<canvas :canvas-id="dataCanvasID" :id="dataCanvasID" class="charts3"></canvas>
 		<view class="summary">
-			<view class="title">{{node.mode==MODE_WORK?"工作总数":"任务总数" }}</view>
-			<view class="number">2</view>
+			<!-- {{mode==MODE_WORK?"工作总数":"任务总数" }} -->
+			<view class="title">{{mode==MODE_WORK?"工作总数":"任务总数" }}</view>
+			<view class="number">{{all}}</view>
 			<view class="title">完成数</view>
-			<view class="number">2</view>
+			<view class="number">{{complete}}</view>
 		</view>
 		<!-- <canvas canvas-id="canvasArcbar2" id="canvasArcbar2" class="charts3" style="margin-left: 250upx;"></canvas> -->
 		<!-- <canvas canvas-id="canvasArcbar3" id="canvasArcbar3" class="charts3" style="margin-left: 500upx;"></canvas> -->
@@ -18,8 +19,34 @@
 
 <script>
 	var _self;
+	var complete = 0
+	var all = 1
+	var rate = 0
+	var canvasID = ""
 	export default{
 		props:{
+			canvasID:{
+				type:String,
+				default:""
+			},
+			mode:{
+				type:String,
+				default:"work"
+			},
+			complete:{
+				type:String,
+				default:"0"
+			},
+			all:{
+				type:String,
+				default:'1',
+				// change:_self.fillData(res.data);
+			},
+			rate:{
+				type:Number,
+				default:0,
+				// change:_self.fillData(res.data);
+			},
 			node:{
 				type:Object,
 				default:()=>{
@@ -36,6 +63,11 @@
 				MODE_WORK :"work",
 				MODE_TASK :"task",
 				
+				dataComplete:0,
+				dataAll:1,
+				dataRate:0,
+				dataCanvasID:"",
+				
 				cWidth: '',
 				cHeight: '',
 				cWidth2: '', //横屏图表
@@ -51,69 +83,102 @@
 				sliderMax: 50
 			}
 		},
+
 		created() {
-			
+			// console.log(this)
 			this.cWidth3 = uni.upx2px(250);
 			this.cHeight3 = uni.upx2px(250);
 			this.arcbarWidth = uni.upx2px(8);
 			
 			_self = this
-			uni.request({
-				url: 'https://unidemo.dcloud.net.cn/hello-uniapp-ucharts-data.json',
-				data: {},
-				success: function(res) {
-					_self.fillData(res.data);
-				},
-				fail: () => {
-					_self.tips = "网络错误，小程序端请检查合法域名";
-				},
-				complete() {
-					uni.hideLoading();
-				}
-			});
+			
+			// this.setData({
+			// 	dataComplete:complete,
+			// 	dataAll:all,
+			// 	dataRate:rate,
+			// 	dataCanvasID:canvasID,
+			// })
+			debugger
+			this.setRate(0)
+			// console.log("create")
+			
+			// uni.request({
+			// 	url: 'https://unidemo.dcloud.net.cn/hello-uniapp-ucharts-data.json',
+			// 	data: {},
+			// 	success: function(res) {
+			// 		_self.fillData(res.data);
+			// 	},
+			// 	fail: () => {
+			// 		_self.tips = "网络错误，小程序端请检查合法域名";
+			// 	},
+			// 	complete() {
+			// 		uni.hideLoading();
+			// 	}
+			// });
 			// this.fillData()
 		},
-		methods:{
-			fillData(data) {
-				this.serverData = data;
-				this.tips = data.tips;
-				this.sliderMax = data.Candle.categories.length;
-				
+		watch:{
+			
+			canvasID(val){
+				debugger
+				console.log((val))
+				canvasID = val
+				this.setData({
+					dataCanvasID:val
+				})
+			},
+			all(val){
+				// this.setData()
+				// console.log(val)
 				// debugger
+				all = val
+				this.setData({
+					dataAll:val
+				})
+				// this.fillData()
+			},
+			
+			complete(val){
+				complete = val
+				// console.log(val)
+				this.dataComplete = val
+				// this.setData({
+				// 	dataComplete:val
+				// })
+				// this.fillData()
+			},
+			
+			rate(val){
+				// console.log(val)
+				rate = val
+				this.rate = val
+				// this.dataRate = val
+				// this.setData({dataRate : val})
+				this.setRate(val)
+			}
+			// all(new,old){
+			// 	console.log(new,old)
+			// }
+		},
+		methods:{
+			setRate(rate) {
 				let Arcbar1 = {
 					series: []
-				};
-				let Arcbar2 = {
-					series: []
-				};
-				let Arcbar3 = {
-					series: []
-				};
-				Arcbar1.series = data.Arcbar1.series;
-				// Arcbar2.series = data.Arcbar2.series;
-				// Arcbar3.series = data.Arcbar3.series;
-				
+				};				
 				var chartData1 = {
 					series: [{
 						name: '正确率',
-						data: 0.89,
+						data: rate,
 						color: '#2fc25b'
 					}]
-				}
-				var chartData2 = {
-					series: [{
-						name: '正确率2',
-						data: 0.19,
-						color: '#2fc25b'
-					}]
-				}
-		
-				this.showArcbar("canvasArcbar1", chartData1);
-				this.showArcbar("canvasArcbar2", chartData2);
-				// this.showArcbar("canvasArcbar1", chartData1);
-				// this.showArcbar2("canvasArcbar2", Arcbar2);
-				// this.showArcbar3("canvasArcbar3", Arcbar3);
+				}		
+				
+				// this.showArcbar("canvasArcbar1", chartData1);.
+				// console.log(this.canvasID)
+				this.showArcbar(this.canvasID, chartData1)
+				
 			},
+			
 			showArcbar(canvasId, chartData) {
 				var uCharts = this.$uCharts
 				// debugger
@@ -151,6 +216,46 @@
 				});
 
 			},
+			
+			// fillData(data) {
+			// 	// this.serverData = data;
+			// 	// this.tips = data.tips;
+			// 	// this.sliderMax = data.Candle.categories.length;
+			// 	
+			// 	// debugger
+			// 	let Arcbar1 = {
+			// 		series: []
+			// 	};
+			// 	// let Arcbar2 = {
+			// 	// 	series: []
+			// 	// };
+			// 	// let Arcbar3 = {
+			// 	// 	series: []
+			// 	// };
+			// 	// Arcbar1.series = data.Arcbar1.series;
+			// 	// Arcbar2.series = data.Arcbar2.series;
+			// 	// Arcbar3.series = data.Arcbar3.series;
+			// 	// _self = this
+			// 	console.log(123)
+			// 	var rate 
+			// 	var all = parseInt(_self.dataAll)
+			// 	var complete = parseInt(_self.dataComplete)
+			// 	if (all == 0)
+			// 		rate = 0
+			// 	else
+			// 		rate = complete / all
+			// 		
+			// 	debugger
+			// 	var chartData1 = {
+			// 		series: [{
+			// 			name: '正确率',
+			// 			data: rate,
+			// 			color: '#2fc25b'
+			// 		}]
+			// 	}
+			// 		
+			// 	this.showArcbar("canvasArcbar1", chartData1);
+			// },
 		},
 	}
 </script>

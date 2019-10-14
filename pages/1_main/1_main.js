@@ -6,6 +6,7 @@ export default {
 		return {			
 			//顶部tab选项卡
 			current: 0,
+			tabList:['项目','员工'],
 			
 			proList:[
 				 {
@@ -40,18 +41,62 @@ export default {
 					  task_complete:890,
 				},
 			],
+			
+			
+			total:{
+				"ProjectTotal":"250",
+				"WorkTotal":"50",
+				"WorkdoneTotal":"100",
+				"TaskTotal":"60",
+				"TaskDoneTotal":"100",
+				"TaskNotStartTotal":"23", //任务未开始总数
+				"TaskDoingTotal":"66", //正在进行任务总数
+				"TaskClosedTotal":"49"  //任务关闭总数
+			}
 		};
 	},
 
 	onLoad() {
-		this.$db.checkToken().then(res=>{
-			console.log(res)
-		})
-		
+		this.onInit()
+		// this.$db.checkToken().then(res=>{
+		// 	console.log(res)
+		// })
+		// 
 	},
 	methods: {
+		/**
+		 * @method 页面初始化
+		 */
+		onInit(){
+			
+			// this.$refs.chartArc.fillData()
+			
+			
+			this.$db.getMainTotal().then(res=>{
+				// console.log(res)
+				var data = res.data
+				this.setData({
+					total:{
+						"ProjectTotal":"360",
+						"WorkTotal":"300",
+						"WorkdoneTotal":"50",
+						"WorkRate":parseFloat(parseFloat(50/300).toFixed(2)),						
+						"TaskTotal":"300",
+						"TaskDoneTotal":"256",
+						"TaskRate":parseFloat(parseFloat(256/300).toFixed(2)),
+						"TaskNotStartTotal":"100", //任务未开始总数
+						"TaskDoingTotal":"200", //正在进行任务总数
+						"TaskClosedTotal":"300"  //任务关闭总数
+					}
+				})
+			})
+		},
+		
+		/**
+		 * @method 切换选项卡
+		 */
 		onClickItem(index) {
-			console.log(index)
+			// console.log(index)
 			if (this.current !== index) {
 				this.current = index
 			}

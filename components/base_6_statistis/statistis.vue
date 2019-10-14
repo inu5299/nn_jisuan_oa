@@ -2,19 +2,19 @@
 	<view class="content">
 		<view class="leaf pre" >
 			<view class="">未开始</view>
-			<view class="">{{node.pre}}</view>
+			<view class="">{{pre}}</view>
 		</view>
 		<view class="leaf ing" >
 			<view class="">进行中</view>
-			<view class="">{{node.ing}}</view>
+			<view class="">{{ing}}</view>
 		</view>
 		<view class="leaf complete" >
 			<view class="">已完成</view>
-			<view class="">{{node.complete}}</view>
+			<view class="">{{complete}}</view>
 		</view>
 		<view class="leaf close" >
 			<view class="">已关闭</view>
-			<view class="">{{node.close}}</view>
+			<view class="">{{close}}</view>
 		</view>
 	</view>
 </template>
@@ -24,6 +24,24 @@
 
 	export default {
 		props:{
+			pre:{
+				type:String,
+				default:""
+			},
+			ing:{
+				type:String,
+				default:""
+			},
+			complete:{
+				type:String,
+				default:""
+			},
+			close:{
+				type:String,
+				default:""
+			},
+			
+			
 			node:{
 				type:Object,
 				default :()=>{

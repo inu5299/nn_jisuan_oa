@@ -5,13 +5,7 @@ class db{
 	KEY_USER_INFO = "user_info"
 	KEY_UUID = "uuid"
 	
-	// HOST = "https://www.51zfgx.com/dev/"
-	// URL = this.HOST + "photo/"
-	URL = "http://221.7.253.6:9019/Api/"
-	
-	// API_LOGIN =  `${this.URL}system/set/user_info/`
-	
-	API_LOGIN = "http://nnjc.lwdweb.top/User/Login"
+	URL = "http://221.7.253.6:9019/Api/Task/TaskHandler.ashx?"
 	
 	constructor(){}
 	
@@ -57,24 +51,11 @@ class db{
         })
     }
 	
-	/****业务详情****/
-    // 1 用户登录认证
-    login() {
-        return new Promise((resolve, reject) => {
-			this.baseURL( this.API_LOGIN, { UserName: "code",Password: "123"} )
-			.then(res => resolve( res ))
-			.catch(res => reject(res))
-        })
-    }
-		
-	getName(){
-		return "hellow"
-	}
 		
 	/*
-	 * @method 2 验证token
+	 * @method 1 获取token
 	 */
-	checkToken(token){
+	getToken(){
 		// return new Promise((resolve, reject) => {
 		// 	resolve({
 		// 		"code":0,
@@ -83,15 +64,66 @@ class db{
 		// 	})
 		// })
 		
-		return this.baseURL("Task/TaskHandler.ashx?action=getToken","POST", { 
+		return this.baseURL("action=getToken/","POST", { 
 			grant_type:'password',
 			username:"admin",
 			password:"123",
 		})
-		
-		
 	}
 	
+	/*
+	 * @method 7 首页--获取统计详情
+	 */
+	getMainTotal(){
+		return new Promise((resolve, reject) => {
+			resolve({
+				"code":0,
+				"msg":"获取数据成功",
+				"data":{
+					"ProjectTotal":"250",
+					"WorkTotal":"100",
+					"WorkdoneTotal":"50",
+					"TaskTotal":"60",
+					"TaskDoneTotal":"100",
+					"TaskNotStartTotal":"23", //任务未开始总数
+					"TaskDoingTotal":"66", //正在进行任务总数
+					"TaskClosedTotal":"49"  //任务关闭总数
+				}
+			})
+		})
+		
+		return this.baseURL("action=getTotal/","GET", { 
+		})
+	}
+	
+	/*
+	 * @method 8 获取项目信息列表
+	 */
+	getProjectInfo(){
+		return new Promise((resolve, reject) => {
+			resolve({
+				"code": "0",
+				"msg": "操作成功.",
+				"count": "项目总数",
+				"data": [
+					{
+						"ProjectId": "项目id",
+						"ProjectName":"项目名称",
+						"PlanWorkTotal": "计划工作总数",
+						"PlanWorkdoneTotal": "计划工作完成数",
+						"TaskAssignmentCount": "任务指派数",
+						"TaskDoneCount ": "任务完成数",
+						"Status": "项目状态",
+						"Ordinal": "序号"
+					}
+				]
+
+			})
+		})
+		
+		return this.baseURL("action=getProjectInfo/","GET", { 
+		})
+	}
 	
 }
 module.exports = new db()
