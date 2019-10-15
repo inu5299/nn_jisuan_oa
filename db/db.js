@@ -4,6 +4,7 @@ class db{
 	 */
 	KEY_USER_INFO = "user_info"
 	KEY_UUID = "uuid"
+	KEY_TOKEN = "token"
 	
 	URL = "http://221.7.253.6:9019/Api/Task/TaskHandler.ashx?"
 	
@@ -22,6 +23,7 @@ class db{
                 header: {
                     'content-type': 'application/x-www-form-urlencoded' ,// 默认值
 					'Access-Control-Allow-Origin':true,
+					'Authorization': 'Bearer ' + uni.getStorageSync("token")
                 },
                 data: data,
                 success(res) {
@@ -43,7 +45,7 @@ class db{
 				method:method,
                 data:data || {},
             })
-            .then(res => resolve(res))
+            .then(res => resolve(res.data))
             .catch(res => {
 				
 				reject(res)
@@ -64,7 +66,7 @@ class db{
 		// 	})
 		// })
 		
-		return this.baseURL("action=getToken/","POST", { 
+		return this.baseURL("action=getToken","GET", { 
 			grant_type:'password',
 			username:"admin",
 			password:"123",
@@ -73,55 +75,48 @@ class db{
 	
 	/*
 	 * @method 7 首页--获取统计详情
+	 * @
 	 */
 	getMainTotal(){
 		return new Promise((resolve, reject) => {
-			resolve({
-				"code":0,
-				"msg":"获取数据成功",
-				"data":{
-					"ProjectTotal":"250",
-					"WorkTotal":"100",
-					"WorkdoneTotal":"50",
-					"TaskTotal":"60",
-					"TaskDoneTotal":"100",
-					"TaskNotStartTotal":"23", //任务未开始总数
-					"TaskDoingTotal":"66", //正在进行任务总数
-					"TaskClosedTotal":"49"  //任务关闭总数
-				}
+			this.baseURL("action=getTotal","GET", {
+				// page:"1"
+			}).then(res=>{
+				var data = res.data
+				console.log(data)
+				data["WorkRate"] = parseFloat(parseFloat(data["WorkdoneTotal"]/data["WorkTotal"]).toFixed(2))
+				data["TaskRate"] = parseFloat(parseFloat(data["TaskDoneTotal"]/data["TaskTotal"]).toFixed(2))
+				// data["TaskRate"] = 0.14
+				console.log(data["TaskRate"])
+				res.data = data
+				resolve(res)
+			}).catch(res => {				
+				reject(res)
 			})
 		})
-		
-		return this.baseURL("action=getTotal/","GET", { 
-		})
+		// return 
 	}
 	
 	/*
 	 * @method 8 获取项目信息列表
 	 */
-	getProjectInfo(){
-		return new Promise((resolve, reject) => {
-			resolve({
-				"code": "0",
-				"msg": "操作成功.",
-				"count": "项目总数",
-				"data": [
-					{
-						"ProjectId": "项目id",
-						"ProjectName":"项目名称",
-						"PlanWorkTotal": "计划工作总数",
-						"PlanWorkdoneTotal": "计划工作完成数",
-						"TaskAssignmentCount": "任务指派数",
-						"TaskDoneCount ": "任务完成数",
-						"Status": "项目状态",
-						"Ordinal": "序号"
-					}
-				]
-
-			})
-		})
+	getProjectInfo(page,limit){
 		
-		return this.baseURL("action=getProjectInfo/","GET", { 
+		return new Promise((resolve, reject) => {
+			this.baseURL("action=getProjectInfo","GET", { 
+				page:page,
+				limit:limit
+			}).then(res=>{
+				var data = res.data
+				for (var i=0;i<data.length;i++){					
+					data[i]["RatePlan"] = parseInt( data[i]['PlanWorkdoneTotal'] / data[i]['PlanWorkTotal']   * 100 ) || 0
+					data[i]["RateTask"] = parseInt( data[i]['TaskDoneCount'] / data[i]['TaskAssignmentCount']  * 100 ) || 0
+				}
+				res.data = data
+				resolve(res)
+			}).catch(res => {				
+				reject(res)
+			})
 		})
 	}
 	

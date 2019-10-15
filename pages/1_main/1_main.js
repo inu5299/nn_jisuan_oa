@@ -1,29 +1,25 @@
 
 
 export default {
-
 	data() {
 		return {			
 			//顶部tab选项卡
 			current: 0,
 			tabList:['项目','员工'],
 			
-			proList:[
-				 {
-					  status:1,
-					  name:"项目一",
-					  work:100,
-					  work_complete:80,
-					  task:100,
-					  task_complete:80,
-				},
-				 {
-					  status:2,
-					  name:"项目二",
-					  work:110,
-					  work_complete:80,
-					  task:120,
-					  task_complete:80,
+			projectList:[
+				{
+					Ordinal: 19,
+					PlanWorkTotal: 33,
+					PlanWorkdoneTotal: 0,
+					ProjectId: "6b2f3397-b133-f06e-8fcc-a4b7a95cd876",
+					ProjectName: "东方先导糖酒仓库管理系统",
+					Status: "未开始",
+					TaskAssignmentCount: null,
+					TaskDoneCount: null,
+					RatePlan:0,
+					RateTask:0,
+					
 				}
 			],
 			
@@ -44,14 +40,16 @@ export default {
 			
 			
 			total:{
-				"ProjectTotal":"250",
-				"WorkTotal":"50",
-				"WorkdoneTotal":"100",
-				"TaskTotal":"60",
-				"TaskDoneTotal":"100",
-				"TaskNotStartTotal":"23", //任务未开始总数
-				"TaskDoingTotal":"66", //正在进行任务总数
-				"TaskClosedTotal":"49"  //任务关闭总数
+				"ProjectTotal":0,
+				"WorkTotal":0,
+				"WorkdoneTotal":0,
+				"TaskTotal":0,
+				"TaskDoneTotal":0,
+				"TaskNotStartTotal":0, //任务未开始总数
+				"TaskDoingTotal":0, //正在进行任务总数
+				"TaskClosedTotal":0  ,//任务关闭总数
+				"WorkRate":0, //工作完成率
+				"TaskRate":0, //任务完成率
 			}
 		};
 	},
@@ -63,34 +61,35 @@ export default {
 		// })
 		// 
 	},
+	onReachBottom(){
+		console.log("onReachBottom")
+	},
 	methods: {
 		/**
 		 * @method 页面初始化
 		 */
 		onInit(){
-			
-			// this.$refs.chartArc.fillData()
-			
-			
+			// 获取综合信息
 			this.$db.getMainTotal().then(res=>{
 				// console.log(res)
-				var data = res.data
+				// debugger
+				// var data = res.data
+				console.log(res.data)
 				this.setData({
-					total:{
-						"ProjectTotal":"360",
-						"WorkTotal":"300",
-						"WorkdoneTotal":"50",
-						"WorkRate":parseFloat(parseFloat(50/300).toFixed(2)),						
-						"TaskTotal":"300",
-						"TaskDoneTotal":"256",
-						"TaskRate":parseFloat(parseFloat(256/300).toFixed(2)),
-						"TaskNotStartTotal":"100", //任务未开始总数
-						"TaskDoingTotal":"200", //正在进行任务总数
-						"TaskClosedTotal":"300"  //任务关闭总数
-					}
+					total: res.data,
 				})
 			})
+			
+			// 获取项目信息列表
+			this.$db.getProjectInfo(1,10).then(res=>{
+				this.setData({
+					projectList:res.data
+				})
+				// console.log(res.data)
+			})
 		},
+		
+		
 		
 		/**
 		 * @method 切换选项卡

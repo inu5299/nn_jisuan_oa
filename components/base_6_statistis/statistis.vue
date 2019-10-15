@@ -25,33 +25,20 @@
 	export default {
 		props:{
 			pre:{
-				type:String,
-				default:""
+				type:[String, Number],
+				default:0
 			},
 			ing:{
-				type:String,
-				default:""
+				type:[String, Number],
+				default:0
 			},
 			complete:{
-				type:String,
-				default:""
+				type:[String, Number],
+				default:0
 			},
 			close:{
-				type:String,
-				default:""
-			},
-			
-			
-			node:{
-				type:Object,
-				default :()=>{
-					return {
-						pre:10,
-						ing:23,
-						complete:564,
-						close:6,
-					}
-				},
+				type:[String, Number],
+				default:0
 			},
 		},
 		data() {

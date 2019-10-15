@@ -34,7 +34,7 @@
 				default: ''
 			},
 			moreText: {
-				type: String,
+				type: [String, Number],
 				default: ''
 			},
 			backgroundColor: {

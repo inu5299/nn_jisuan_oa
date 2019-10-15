@@ -1,3 +1,5 @@
+
+
 <template>
 	<view class="container">
 			<!-- 顶部选项卡 -->
@@ -17,18 +19,17 @@
 			<view class="oa-node ">
 				<uni-notice-bar 
 					:show-get-more="true" :show-icon="true" :single="true" 
-					text="项目总数" more-text="120" @getmore="to6Pro" />		
+					text="项目总数" :more-text="total.ProjectTotal" @getmore="to6Pro" />		
 			</view>
 					
 			<!-- 饼状图 -->
-			<view class="oa-node oa-flex_between oa-white">
+			<view class="oa-node oa-flex_between oa-white ">
 				<chart-arc mode="work" 
 					:canvasID="'work'"
 					:complete="total.WorkdoneTotal" 
 					:all="total.WorkTotal"
 					:rate="total.WorkRate"
 				></chart-arc>
-				
 				<chart-arc mode="task"	
 					:canvasID="'task'"
 					:complete="total.TaskDoneTotal" 
@@ -48,8 +49,19 @@
 					:close="total.TaskClosedTotal"
 				></statistis>
 			</view>
-			<view class="oa-node oa-white oa-space_10"  v-for="(item,key) in proList"  @click="clickPro(key)">
-				<task-process :node="item"></task-process>
+			<view class="oa-node oa-white oa-space_10"  v-for="(item,key) in projectList"  @click="clickPro(key)">
+				<task-process :node="item"
+					:Ordinal="item.Ordinal"
+					:PlanWorkTotal="item.PlanWorkTotal"
+					:PlanWorkdoneTotal="item.PlanWorkdoneTotal"
+					:ProjectId="item.ProjectId"
+					:ProjectName="item.ProjectName"
+					:Status="item.Status"
+					:TaskAssignmentCount="item.TaskAssignmentCount"
+					:TaskDoneCount="item.TaskDoneCount"			
+					:RatePlan="item.RatePlan"
+					:RateTask="item.RateTask"	
+				></task-process>
 			</view>
 					
 							

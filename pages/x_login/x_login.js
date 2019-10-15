@@ -26,8 +26,8 @@ var GP
 		
 		onLoad(){
 			GP = this
-			this.toMain()
-			// this.checkStatus()
+			// this.toMain()
+			this.checkStatus()
 		},
         methods: {
 			/**
@@ -77,25 +77,12 @@ var GP
 				this.$db.getToken(userName,password).then(res=>{
 					// var result = res.data.result
 					var code = res.code
-					console.log(res)
-					
-					// debugger
-					if(code == this.$CODE.LOGIN_FAIL){
-						uni.showModal({
-							title:"账号或密码错误",
-							showCancel:false,
-						})			
-						return 
-					}else{
-						wx.showToast({
-							title:"登陆成功"
-						})
+					console.log(res)			
 			
-						// 设置TOKEN
-						uni.setStorageSync(this.$db.KEY_TOKEN,res.data.token)
-						console.log(uni.getStorageSync(this.$db.KEY_TOKEN))
-						this.toMain()
-					}
+					// 设置TOKEN
+					uni.setStorageSync(this.$db.KEY_TOKEN,res.data)
+					console.log(uni.getStorageSync(this.$db.KEY_TOKEN))
+					this.toMain()
 				})
 			},
 			

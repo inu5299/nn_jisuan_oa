@@ -3,7 +3,7 @@
 	<!-- 圆弧进度图 -->
 	<view class="qiun-charts3">
 		
-		<canvas :canvas-id="dataCanvasID" :id="dataCanvasID" class="charts3"></canvas>
+		<canvas :canvas-id="canvasID" :id="canvasID" class="charts3"></canvas>
 		<view class="summary">
 			<!-- {{mode==MODE_WORK?"工作总数":"任务总数" }} -->
 			<view class="title">{{mode==MODE_WORK?"工作总数":"任务总数" }}</view>
@@ -18,11 +18,6 @@
 </template>
 
 <script>
-	var _self;
-	var complete = 0
-	var all = 1
-	var rate = 0
-	var canvasID = ""
 	export default{
 		props:{
 			canvasID:{
@@ -34,18 +29,16 @@
 				default:"work"
 			},
 			complete:{
-				type:String,
-				default:"0"
+				type:[String, Number],
+				default:0
 			},
 			all:{
-				type:String,
-				default:'1',
-				// change:_self.fillData(res.data);
+				type:[String, Number],
+				default:1,
 			},
 			rate:{
-				type:Number,
+				type:[String, Number],
 				default:0,
-				// change:_self.fillData(res.data);
 			},
 			node:{
 				type:Object,
@@ -90,98 +83,37 @@
 			this.cHeight3 = uni.upx2px(250);
 			this.arcbarWidth = uni.upx2px(8);
 			
-			_self = this
-			
-			// this.setData({
-			// 	dataComplete:complete,
-			// 	dataAll:all,
-			// 	dataRate:rate,
-			// 	dataCanvasID:canvasID,
-			// })
-			debugger
-			this.setRate(0)
-			// console.log("create")
-			
-			// uni.request({
-			// 	url: 'https://unidemo.dcloud.net.cn/hello-uniapp-ucharts-data.json',
-			// 	data: {},
-			// 	success: function(res) {
-			// 		_self.fillData(res.data);
-			// 	},
-			// 	fail: () => {
-			// 		_self.tips = "网络错误，小程序端请检查合法域名";
-			// 	},
-			// 	complete() {
-			// 		uni.hideLoading();
-			// 	}
-			// });
-			// this.fillData()
+			// console.log(this)
+			this.setRate(this.rate)
 		},
-		watch:{
-			
-			canvasID(val){
-				debugger
-				console.log((val))
-				canvasID = val
-				this.setData({
-					dataCanvasID:val
-				})
-			},
-			all(val){
-				// this.setData()
-				// console.log(val)
-				// debugger
-				all = val
-				this.setData({
-					dataAll:val
-				})
-				// this.fillData()
-			},
-			
-			complete(val){
-				complete = val
-				// console.log(val)
-				this.dataComplete = val
-				// this.setData({
-				// 	dataComplete:val
-				// })
-				// this.fillData()
-			},
+		watch:{		
 			
 			rate(val){
 				// console.log(val)
-				rate = val
-				this.rate = val
-				// this.dataRate = val
-				// this.setData({dataRate : val})
 				this.setRate(val)
 			}
-			// all(new,old){
-			// 	console.log(new,old)
-			// }
 		},
 		methods:{
 			setRate(rate) {
+				// debugger
 				let Arcbar1 = {
 					series: []
 				};				
 				var chartData1 = {
 					series: [{
-						name: '正确率',
+						name: '完成率',
 						data: rate,
 						color: '#2fc25b'
 					}]
 				}		
 				
-				// this.showArcbar("canvasArcbar1", chartData1);.
-				// console.log(this.canvasID)
 				this.showArcbar(this.canvasID, chartData1)
 				
 			},
 			
 			showArcbar(canvasId, chartData) {
 				var uCharts = this.$uCharts
-				// debugger
+				var _self = this
 				new uCharts({
 					$this: _self,
 					canvasId: canvasId,
@@ -189,7 +121,7 @@
 					fontSize: 11,
 					legend: false,
 					title: {
-						name: (chartData.series[0].data * 100 )+ '%',
+						name: parseInt(chartData.series[0].data * 100 )+ '%',
 						// name: Math.round(chartData.series[0].data * 100) + '%',
 						color: chartData.series[0].color,
 						fontSize: 25 * _self.pixelRatio
@@ -271,7 +203,7 @@
 	}
 	.number{
 		
-		font-size: 20pt;
+		font-size: 13pt;
 		color: #666;
 		font-weight: bold;
 		line-height: 22pt;
@@ -287,7 +219,8 @@
 		/* position: relative; */
 		display: flex;
 		align-items: center;
-		padding:10px 5px;
+		/* padding:10px 5px; */
+		padding:10px 10px 10px 0;
 	}
 
 	.charts3 {
