@@ -2,18 +2,21 @@
    <view class="page">
 		<view class="content">
 				<view class="header">
-					<text class=" uni-ellipsis" >{{node.name}}</text>
+					<text class=" uni-ellipsis" >{{node.UserName}}</text>
 					<view   class="status pre">{{node.position}}</view>
-		
+		<!-- "UserName":"1",
+		"TaskTotal":0,
+		"TaskDoneTotal":0,
+		"TaskRate":0, //任务完成率 -->	
 				</view>
 				<view class="" style="height: 10px;"></view>
 
 				<view class="flex task">
-					<view style="font-size: 9pt">任务指派数：{{node.task}}</view>
-					<view style="font-size: 9pt">任务完成数：{{node.task_complete}}</view>
+					<view style="font-size: 9pt">任务指派数：{{node.TaskDoneTotal}}</view>
+					<view style="font-size: 9pt">任务完成数：{{node.TaskAssitTotal}}</view>
 				</view>				
 				<view class="progress-box">
-					<progress percent="20" show-info stroke-width="3"  activeColor="#ff6633"  />
+					<progress percent="TaskRate" show-info stroke-width="3"  activeColor="#ff6633"  />
 				</view>
 				
 				<!-- <view v-if="node.status == PRE" class="uni-text-small uni-ellipsis  "> <view class="date dpre">计划开始时间:{{node.date}}</view></view>
@@ -55,11 +58,15 @@
 				type: Object,
 				default: () => {
 					return {
-						  status:1,
-						  name:"王五",
-						  position:"项目经理",
-						  task:100,
-						  task_complete:80,
+						"UserName":"1",
+						"TaskTotal":0,
+						"TaskDoneTotal":0,
+						"TaskRate":0, //任务完成率				
+						  // status:1,
+						  // name:"王五",
+						  // position:"项目经理",
+						  // task:100,
+						  // task_complete:80,
 					}
 				}
 			},

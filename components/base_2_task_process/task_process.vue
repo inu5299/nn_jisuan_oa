@@ -1,49 +1,32 @@
 <template>
    <view class="page">
 		<view class="content">
-				<view class="header">
-					<text class="" >{{Ordinal}}. {{ProjectName}}</text>
-					<text class="mark" >
-						<view v-if="Status == '未开始'" class="status pre">未开始</view>
-						<view v-if="Status == '进行中'" class="status ing">进行中</view>
-						<view v-if="Status == '已完成'" class="status complete">已完成</view>
-						<view v-if="Status == '已关闭'" class="status close">已关闭</view>
-					</text>
-				</view>
-				<view class="" style="height: 10px;"></view>
-				<view class="flex work">
-					<view style="font-size: 9pt">计划工作数：{{PlanWorkTotal|| 0}}</view>
-					<view style="font-size: 9pt">工作完成数：{{PlanWorkdoneTotal || 0}}</view>
-				</view>				
-				<view class="progress-box">
-					<progress :percent="RatePlan" show-info stroke-width="3" activeColor="#1abc9c" />
-				</view>
-				<view class="" style="height: 10px;"></view>
-				
-				<view class="flex task">
-					<view style="font-size: 9pt">任务指派数：{{TaskAssignmentCount|| 0}}</view>
-					<view style="font-size: 9pt">任务完成数：{{TaskDoneCount|| 0}}</view>
-				</view>				
-				<view class="progress-box">
-					<progress :percent="RateTask" show-info stroke-width="3"  activeColor="#ff6633"  />
-				</view>
-				
-				
-				
-				
-				
-				<!-- <view v-if="node.status == PRE" class="uni-text-small uni-ellipsis  "> <view class="date dpre">计划开始时间:{{node.date}}</view></view>
-				<view v-if="node.status == ING" class="uni-text-small uni-ellipsis  "> <view class="date ding">计划结束时间:{{node.date}}</view></view>
-				<view v-if="node.status == COMPLETE" class="uni-text-small uni-ellipsis  "> <view class="date dcomplete">实际结束时间:{{node.date}}</view></view>
-				<view v-if="node.status == CLOSE" class="uni-text-small uni-ellipsis  "> <view class="date dclose">实际结束时间:{{node.date}}</view></view>
-				 -->
-					<!-- <view v-if="node.status == PRE" class="uni-text-small uni-ellipsis date pre">{{node.date}}</view>
-					<view v-if="node.status == ING" class="uni-text-small uni-ellipsis  date ing">{{node.date}}</view>
-					<view v-if="node.status == COMPLETE" class="uni-text-small uni-ellipsis  date complete">{{node.date}}</view>
-					<view v-if="node.status == CLOSE" class="uni-text-small uni-ellipsis date  close ">{{node.date}}</view> -->
-					
-				<!-- <text class="uni-text-small uni-ellipsis">{{node.date}}  </text> -->
+			<view class="header">
+				<text class="" >{{node.Ordinal}}. {{node.ProjectName}}</text>
+				<text class="mark" >
+					<view v-if="node.Status == '未开始'" class="status pre">未开始</view>
+					<view v-if="node.Status == '进行中'" class="status ing">进行中</view>
+					<view v-if="node.Status == '已完成'" class="status complete">已完成</view>
+					<view v-if="node.Status == '已关闭'" class="status close">已关闭</view>
+				</text>
+			</view>
+			<view class="" style="height: 10px;"></view>
+			<view class="flex work">
+				<view style="font-size: 9pt">计划工作数：{{node.PlanWorkTotal|| 0}}</view>
+				<view style="font-size: 9pt">工作完成数：{{node.PlanWorkdoneTotal || 0}}</view>
+			</view>				
+			<view class="progress-box">
+				<progress :percent="node.RatePlan" show-info stroke-width="3" activeColor="#1abc9c" />
+			</view>
+			<view class="" style="height: 10px;"></view>
 			
+			<view class="flex task">
+				<view style="font-size: 9pt">任务指派数：{{node.TaskAssignmentCount|| 0}}</view>
+				<view style="font-size: 9pt">任务完成数：{{node.TaskDoneCount|| 0}}</view>
+			</view>				
+			<view class="progress-box">
+				<progress :percent="node.RateTask" show-info stroke-width="3"  activeColor="#ff6633"  />
+			</view>
 		</view>
     </view>
 </template>
@@ -69,17 +52,21 @@
 				rateTask:0,
             }
         },
-		 props: {
+		props: {
 			node:{
 				type: Object,
 				default: () => {
 					return {
-						  status:1,
-						  name:"王五",
-						  work:100,
-						  work_complete:80,
-						  task:100,
-						  task_complete:80,
+						Ordinal: 19,
+						PlanWorkTotal: 33,
+						PlanWorkdoneTotal: 0,
+						ProjectId: "6b2f3397-b133-f06e-8fcc-a4b7a95cd876",
+						ProjectName: "东方先导糖酒仓库管理系统",
+						Status: "未开始",
+						TaskAssignmentCount: null,
+						TaskDoneCount: null,
+						RatePlan:0,
+						RateTask:0,
 					}
 				}
 			},
@@ -88,74 +75,8 @@
 				type:Boolean,
 				default:false,
 			},
-			
-			Ordinal:{
-				type:[String, Number],
-				default:""
-			},
-			
-			PlanWorkTotal:{
-				type:[String, Number],
-				default:0
-			},
-			PlanWorkdoneTotal:{
-				type:[String, Number],
-				default:0
-			},
-			ProjectId:{
-				type:[String, Number],
-				default:""
-			},
-			ProjectName:{
-				type:[String, Number],
-				default:""
-			},
-			Status:{
-				type:[String, Number],
-				default:""
-			},
-			TaskAssignmentCount:{
-				type:[String, Number],
-				default:""
-			},
-			TaskDoneCount:{
-				type:[String, Number],
-				default:""
-			},
-			
-			
-			RatePlan:{
-				type:[String, Number],
-				default:0
-			},
-			
-			RateTask:{
-				type:[String, Number],
-				default:0
-			},
-			
 		},
-		// watch:{			
-		// 	PlanWorkTotal(val){
-		// 		console.log("PlanWorkTotalval)
-		// 		if (val)
-		// 			this.ratePlan =  parseInt( this.PlanWorkdoneTotal / val  * 100 )
-		// 		else
-		// 			this.ratePlan = 0
-		// 		
-		// 		// ratePlan:0,
-		// 		// rateTask:0,
-		// 	},	
-		// 	PlanWorkdoneTotal(val){
-		// 		console.log("PlanWorkdoneTotal",val)
-		// 		if (this.PlanWorkdoneTotal)
-		// 			this.ratePlan =  parseInt( val / this.PlanWorkTotal  * 100 )
-		// 		else
-		// 			this.ratePlan = 0
-		// 		
-		// 	}
-		// 	
-		// },
+					
 		methods:{
 			updatePlan(){
 				
@@ -210,3 +131,74 @@
 		font-size: 9pt !important;
 	}
 </style>
+
+
+
+
+		<!-- 	// Ordinal:{
+			// 	type:[String, Number],
+			// 	default:""
+			// },
+			// 
+			// PlanWorkTotal:{
+			// 	type:[String, Number],
+			// 	default:0
+			// },
+			// PlanWorkdoneTotal:{
+			// 	type:[String, Number],
+			// 	default:0
+			// },
+			// ProjectId:{
+			// 	type:[String, Number],
+			// 	default:""
+			// },
+			// ProjectName:{
+			// 	type:[String, Number],
+			// 	default:""
+			// },
+			// Status:{
+			// 	type:[String, Number],
+			// 	default:""
+			// },
+			// TaskAssignmentCount:{
+			// 	type:[String, Number],
+			// 	default:""
+			// },
+			// TaskDoneCount:{
+			// 	type:[String, Number],
+			// 	default:""
+			// },
+			// 
+			// 
+			// RatePlan:{
+			// 	type:[String, Number],
+			// 	default:0
+			// },
+			// 
+			// RateTask:{
+			// 	type:[String, Number],
+			// 	default:0
+			// },
+			
+	
+		// watch:{			
+		// 	PlanWorkTotal(val){
+		// 		console.log("PlanWorkTotalval)
+		// 		if (val)
+		// 			this.ratePlan =  parseInt( this.PlanWorkdoneTotal / val  * 100 )
+		// 		else
+		// 			this.ratePlan = 0
+		// 		
+		// 		// ratePlan:0,
+		// 		// rateTask:0,
+		// 	},	
+		// 	PlanWorkdoneTotal(val){
+		// 		console.log("PlanWorkdoneTotal",val)
+		// 		if (this.PlanWorkdoneTotal)
+		// 			this.ratePlan =  parseInt( val / this.PlanWorkTotal  * 100 )
+		// 		else
+		// 			this.ratePlan = 0
+		// 		
+		// 	}
+		// 	
+		// }, -->

@@ -40,16 +40,16 @@
 				type:[String, Number],
 				default:0,
 			},
-			node:{
-				type:Object,
-				default:()=>{
-					return {
-						"mode":"work",
-						"all":23,
-						"complete":20,						
-					}
-				},
-			},
+			// node:{
+			// 	type:Object,
+			// 	default:()=>{
+			// 		return {
+			// 			"mode":"work",
+			// 			"all":23,
+			// 			"complete":20,						
+			// 		}
+			// 	},
+			// },
 		},
 		data(){
 			return {
@@ -89,7 +89,8 @@
 		watch:{		
 			
 			rate(val){
-				// console.log(val)
+				console.log(val)
+				
 				this.setRate(val)
 			}
 		},
