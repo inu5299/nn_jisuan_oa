@@ -71,8 +71,8 @@
 			</view>
 			<view class="oa-node oa-white oa-space_10"  v-for="(item,key) in list"  @click="clickUser(item.Guid)" >
 				 <!-- <task-process :node="item"></task-process> -->
-				 {{item.TaskRate}}
-				<task-process-single :node="item" class="line"  ></task-process-single>
+				<!-- {{item.TaskRate}} -->
+				<task-process-single :node="item" class="line" ></task-process-single>
 			</view>
 					
 		 </view>
