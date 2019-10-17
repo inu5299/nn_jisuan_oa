@@ -111,11 +111,11 @@ class dbProject extends dbBase{
 				//TODO 修改的bug
 				var data = [res.data]  
 				console.log(data)
-				// debugger
+				debugger
 				// 增加数据
 				for (var i=0;i<data.length;i++){		
 					
-					data[i]["TaskRate"] = parseInt( data[i]['TaskDoneTotal'] / data[i]['TaskAssitTotal']  * 100 ) || 0
+					data[i]["TaskRate"] = parseInt( data[i]['TaskAssitTotal'] / data[i]['TaskDoneTotal']  * 100 ) || 0
 				}
 				res.data = data
 				resolve(res)
