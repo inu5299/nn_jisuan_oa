@@ -111,7 +111,7 @@ class dbProject extends dbBase{
 				//TODO 修改的bug
 				var data = [res.data]  
 				console.log(data)
-				debugger
+				debugger 
 				// 增加数据
 				for (var i=0;i<data.length;i++){		
 					

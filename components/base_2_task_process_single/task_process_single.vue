@@ -16,7 +16,7 @@
 					<view style="font-size: 9pt">任务完成数：{{node.TaskAssitTotal}}</view>
 				</view>				
 				<view class="progress-box">
-					<progress percent="TaskRate" show-info stroke-width="3"  activeColor="#ff6633"  />
+					<progress percent="TaskRate" show-info stroke-width="3"  activeColor="#ff6633" />
 				</view>
 				
 				<!-- <view v-if="node.status == PRE" class="uni-text-small uni-ellipsis  "> <view class="date dpre">计划开始时间:{{node.date}}</view></view>
